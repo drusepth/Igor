@@ -1,9 +1,12 @@
 var igor_commands = [
   {
     'name': 'twitter-status-update',
+	
     'matcher': match_all,
     'keywords': ['update', 'twitter', 'to'],
-    'handler': update_twitter_status
+	
+    'handler': 'update_twitter_status',
+	'from': 'integrations/twitter.js'
   }
   /*
   TODO: 
@@ -28,11 +31,3 @@ var igor_commands = [
   [ 'who-is-lookup', match_all, ['who', 'is'], lookup_person ]
   */
 ];
-
-function update_twitter_status (spoken)
-{
-  var new_status = spoken.substring(spoken.indexOf('status to') + 10);
-  
-  debug("Updating Twitter status to: " + new_status);
-  // do twitter stuff
-}
