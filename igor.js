@@ -7,13 +7,13 @@ loadScript('igor-initializer.js');
 
 function loadScript(url, callback)
 {
-  console.log("Loading script " + url);
-  var head = document.getElementsByTagName('head')[0];
-  var script = document.createElement('script');
-  script.type = 'text/javascript';
-  script.src = url;
-  script.onload = callback;
-  script.onreadystatechange = callback;
-  head.appendChild(script);
+	console.log("Loading script " + url);
+	var head = document.getElementsByTagName('head')[0];
+	var script = document.createElement('script');
+	script.type = 'text/javascript';
+	script.src = url;
+	script.onload = callback;
+	script.onreadystatechange = callback;
+	head.appendChild(script);
 }
 
