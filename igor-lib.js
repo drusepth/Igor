@@ -1,40 +1,52 @@
-function parse_input(utterances)
+// Parse webkit speech output for recognized Igor commands
+function parse_speech(utterances)
 {
 	for (u = 0; u < utterances.length && u < igor_config.utterance_match_limit; u++)
 	{
 		utterance = utterances[u].utterance;
 		debug("Probably said: " + utterance);
 		
-		for (c in igor_commands)
+		command = match_command(utterance);
+		if (command)
 		{
-			command = igor_commands[c];
-			
-			if (command.matcher(utterance, command.keywords))
-			{
-				debug("Invoking " + command.handler + " from " + command.from);
-				
-				if (is_integration_loaded(command.from))
-				{
-					debug("Making the call to " + command.handler);
-					handler = eval(command.handler);
-					handler(utterance);
-				}
-				else
-				{
-					load_integration(command.from, function () {
-						debug("Making the call to " + command.handler);
-						handler = eval(command.handler);
-						handler(utterance);
-					});
-				}
-				
-			  return;
-			}
+		  run_command(command, utterance);
 		}
 	}
 }
 
-function load_integration (path, callback)
+// Run an Igor command, given what was said to invoke it
+function run_command(command, utterance)
+{
+	debug("Making the call to " + command.handler);
+	if (is_integration_loaded(command.from))
+	{
+		eval(command.handler)(utterance);
+	}
+	else
+	{
+		load_integration(command.from, function () {
+			eval(command.handler)(utterance);
+		});
+	}
+}
+
+// Determine whether an utterance matches any Igor commands
+function match_command(utterance)
+{
+  for (c in igor_commands)
+	{
+		command = igor_commands[c];
+		
+		if (command.matcher(utterance, command.keywords))
+		{
+			debug("Matched " + command.handler + " from " + command.from);
+			return command;
+		}
+	}
+}
+
+// Lazy-load javascript from the integrations/ directory for use
+function load_integration(path, callback)
 {
 	if (!is_integration_loaded(path))
 	{
@@ -44,7 +56,8 @@ function load_integration (path, callback)
 	}
 }
 
-function is_integration_loaded (path)
+// Determines whether an integration has already been loaded
+function is_integration_loaded(path)
 {
 	for (i = 0; i < loaded_integrations.length; i++)
 	{
@@ -57,7 +70,8 @@ function is_integration_loaded (path)
 	return false;
 }
 
-function match_all (haystack, needles)
+// Returns true if all words in needles exist in haystack
+function match_all(haystack, needles)
 {
 	for (i in needles)
 	{
@@ -70,7 +84,8 @@ function match_all (haystack, needles)
 	return true;
 }
 
-function match_any (haystack, needles)
+// Returns true if any word in needles exists in haystack
+function match_any(haystack, needles)
 {
 	for (i in needles)
 	{

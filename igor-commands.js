@@ -7,6 +7,16 @@ var igor_commands = [
 	
 		'handler': 'update_twitter_status',
 		'from': 'integrations/twitter.js'
+	},
+	
+	{
+	  'name': 'facebook-status-update',
+	  
+	  'matcher': match_all,
+	  'keywords': ['update', 'facebook', 'to'],
+	  
+	  'handler': 'update_facebook_status',
+	  'from': 'integrations/facebook.js'
 	}
 	
 	/*
