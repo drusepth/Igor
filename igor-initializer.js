@@ -1,6 +1,7 @@
 $(document).ready(function () {
-	$('#igor-input').bind('onwebkitspeechchange', function (e)
+	$('#igor-input').bind('webkitspeechchange', function (e)
 	{
-		parse_speech(e.results);
+	  debug("Triggered Igor");
+		parse_speech(e.originalEvent.results);
 	});
 });

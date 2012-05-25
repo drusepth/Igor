@@ -16,7 +16,7 @@ var igor_commands = [
 	  'keywords': ['update', 'facebook', 'to'],
 	  
 	  'handler': 'update_facebook_status',
-	  'from': 'integrations/facebook.js'
+	  'from': 'integrations/facebook.js',
 	}
 	
 	/*
