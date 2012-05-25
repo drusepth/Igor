@@ -24,7 +24,15 @@ your-project-here.js file in the integrations directory. To set Igor up to match
 specific words and trigger your functionality, it's as simple as adding a hash
 to the igor_commands array in igor-commands.js. Example below:
 ```javascript
+{
+	'name': 'twitter-status-update',
 
+	'matcher': match_all,
+	'keywords': ['update', 'twitter', 'to'],
+
+	'handler': 'update_twitter_status',
+	'from': 'integrations/twitter.js'
+},
 ```
 
 ## The Parts
