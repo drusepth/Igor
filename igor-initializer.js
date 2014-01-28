@@ -22,9 +22,17 @@ $(document).ready(function () {
     parse_speech(message);
   }
 
-  $('#start-igor').bind('click', function (e)
+  recognition.onerror = function (e)
+  {
+    console.log("error!");
+    console.log(e);
+  }
+
+  recognition.onend = function ()
   {
     recognition.start();
-  });
+  }
+
+  recognition.start();
 
 });
