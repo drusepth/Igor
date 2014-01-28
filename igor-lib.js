@@ -1,31 +1,26 @@
 // Parse webkit speech output for recognized Igor commands
-function parse_speech(utterances)
+function parse_speech(message)
 {
-  for (u = 0; u < utterances.length && u < igor_config.utterance_match_limit; u++)
+  debug("Message = " + message);
+  command = match_command(message);
+  if (command)
   {
-    utterance = utterances[u].utterance;
-    debug("Probably said: " + utterance);
-		
-    command = match_command(utterance);
-    if (command)
-    {
-      run_command(command, utterance);
-    }
+    run_command(command, message);
   }
 }
 
 // Run an Igor command, given what was said to invoke it
-function run_command(command, utterance)
+function run_command(command, message)
 {
   debug("Making the call to " + command.handler);
   if (is_integration_loaded(command.from))
   {
-    eval(command.handler)(utterance);
+    eval(command.handler)(message);
   }
   else
   {
     load_integration(command.from, function () {
-      eval(command.handler)(utterance);
+      eval(command.handler)(message);
     });
   }
 }
