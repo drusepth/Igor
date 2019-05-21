@@ -35,6 +35,8 @@ to the igor_commands array in igor-commands.js. Example below:
 },
 ```
 
+The previous snippet sets up a command hook that fires whenever "update", "twitter", and "to" are all heard in a user's voice command (since we're using the `match_all` matcher -- you can also use `match_any` to match _any_ keyword or write your own custom matchers). When the command hook fires, it calls the `update_twitter_status` function in `integrations/twitter.js`. If this file hasn't been included yet, it's automatically required into the page context.
+
 ## The Parts
 ### Igor
 The base Igor script is meant to be as light as possible to prevent causing
